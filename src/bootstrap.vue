@@ -9,7 +9,7 @@
 // import 'bootstrap/js/dist/button';
 // import 'bootstrap/js/dist/carousel';
 // import 'bootstrap/js/dist/collapse';
-// import 'bootstrap/js/dist/dropdown';
+import 'bootstrap/js/dist/dropdown';
 // import Modal from 'bootstrap/js/dist/modal'; // Handled by vm.$prompt
 // import 'bootstrap/js/dist/offcanvas';
 // import 'bootstrap/js/dist/popover';
@@ -38,21 +38,21 @@
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/type";
 /* @import "bootstrap/scss/images"; */
-/* @import "bootstrap/scss/containers"; */
+@import "bootstrap/scss/containers";
 /* @import "bootstrap/scss/grid"; */
 /* @import "bootstrap/scss/tables"; */
 /* @import "bootstrap/scss/forms"; */
 /* @import "bootstrap/scss/buttons"; */
 /* @import "bootstrap/scss/transitions"; */
-/* @import "bootstrap/scss/dropdown"; */
+@import "bootstrap/scss/dropdown";
 /* @import "bootstrap/scss/button-group"; */
 /* @import "bootstrap/scss/nav"; */
 /* @import "bootstrap/scss/navbar"; */
-/* @import "bootstrap/scss/card"; */
+@import "bootstrap/scss/card";
 /* @import "bootstrap/scss/accordion"; */
 /* @import "bootstrap/scss/breadcrumb"; */
 /* @import "bootstrap/scss/pagination"; */
-/* @import "bootstrap/scss/badge"; */
+@import "bootstrap/scss/badge";
 /* @import "bootstrap/scss/alert"; */
 /* @import "bootstrap/scss/progress"; */
 /* @import "bootstrap/scss/list-group"; */
@@ -65,5 +65,24 @@
 /* @import "bootstrap/scss/spinners"; */
 /* @import "bootstrap/scss/offcanvas"; */
 /* @import "bootstrap/scss/helpers"; */
+/* }}} */
+
+/* Fix: Make <A> blocks act like subtle text {{{ */
+a {
+	text-decoration: none;
+	color: var(--bs-text);
+
+	&:hover {
+		color: var(--bs-primary);
+	}
+}
+/* }}} */
+
+/* Utility: d-flex-center - like d-flex but everything centered {{{ */
+.d-flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 /* }}} */
 </style>

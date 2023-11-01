@@ -1,11 +1,16 @@
 <script>
+import Editor from './editor.vue';
+
 export default {
+	components: {
+		Editor,
+	},
 }
 </script>
 
 <template>
-	<div id="app-inner">
-		Hello World
+	<div>
+		<Editor/>
 	</div>
 </template>
 
@@ -15,5 +20,11 @@ export default {
 	display: flex;
 	align-items: start;
 	overflow: hidden;
+	padding: 30px;
+
+	& > div {
+		width: 100%;
+		height: 100%;
+	}
 }
 </style>
