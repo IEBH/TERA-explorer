@@ -17,7 +17,7 @@ Running locally
 
 1. Clone the Git Repo
 ```bash
-git@github.com:IEBH/TERA-explorer.git
+git clone git@github.com:IEBH/TERA-explorer.git
 cd TERA-explorer
 ```
 
