@@ -78,7 +78,13 @@ a {
 }
 /* }}} */
 
-/* Utility: d-flex-center - like d-flex but everything centered {{{ */
+/* Utility: .clickable - Indicate that an element is clickable {{{ */
+.clickable {
+	cursor: pointer;
+}
+/* }}} */
+
+/* Utility: .d-flex-center - like d-flex but everything centered {{{ */
 .d-flex-center {
 	display: flex;
 	justify-content: center;

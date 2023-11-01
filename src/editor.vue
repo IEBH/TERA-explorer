@@ -35,15 +35,15 @@ export default {
 			<i class="fas fa-spinner fa-spin me-3"/>
 			Loading...
 		</div>
-		<div v-else class="card">
+		<div v-else class="card h-100">
 			<div class="card-header d-flex-center justify-content-between">
 				<div class="dropdown">
-					<a class="dropdown-toggle" type="button" id="dropdownProjectSelect" data-bs-toggle="dropdown" aria-expanded="false">
+					<a class="clickable dropdown-toggle" type="button" id="dropdownProjectSelect" data-bs-toggle="dropdown" aria-expanded="false">
 						{{$tera.state.name}}
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdownProjectSelect">
 						<li v-for="project in $tera.list" :key="project.id">
-							<a class="dropdown-item">
+							<a class="dropdown-item clickable">
 								{{project.name}}
 							</a>
 						</li>
@@ -53,10 +53,11 @@ export default {
 					{{$tera.state.id}}
 				</span>
 			</div>
-			<div class="card-body p-0">
+			<div class="card-body p-0 h-100">
 				<json-editor
 					v-model="$tera.state"
 					mode="text"
+					class="h-100"
 				/>
 			</div>
 		</div>
@@ -65,6 +66,9 @@ export default {
 
 <style lang="scss">
 .editor {
+	--bs-card-bg: transparent;
+	--jse-background-color: transparent;
+
 	&, & > * {
 		width: 100%;
 		height: 100%;
