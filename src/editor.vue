@@ -1,5 +1,10 @@
 <script>
+import JsonEditor from 'json-editor-vue';
+
 export default {
+	components: {
+		JsonEditor,
+	},
 	data() { return {
 		isLoading: true,
 
@@ -48,8 +53,11 @@ export default {
 					{{$tera.state.id}}
 				</span>
 			</div>
-			<div class="card-body">
-				<pre>Project: {{$tera.state}}</pre>
+			<div class="card-body p-0">
+				<json-editor
+					v-model="$tera.state"
+					mode="text"
+				/>
 			</div>
 		</div>
 	</div>
