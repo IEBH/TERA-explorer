@@ -1,6 +1,8 @@
 <script>
 export default {
 	data() { return {
+		isLoading: true,
+
 		$tera: {
 			list: [
 				{id: 'FAKEPROJ', name: 'A fake project'},
@@ -13,12 +15,22 @@ export default {
 			},
 		},
 	}},
+	async created() {
+		// Ensure there is an active project
+		await this.$tera.requireProject();
+
+		this.isLoading = false;
+	},
 }
 </script>
 
 <template>
 	<div class="editor container">
-		<div class="card">
+		<div v-if="isLoading" class="loading d-flex-center fs-1">
+			<i class="fas fa-spinner fa-spin me-3"/>
+			Loading...
+		</div>
+		<div v-else class="card">
 			<div class="card-header d-flex-center justify-content-between">
 				<div class="dropdown">
 					<a class="dropdown-toggle" type="button" id="dropdownProjectSelect" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,12 +57,12 @@ export default {
 
 <style lang="scss">
 .editor {
-	width: 100%;
-	height: 100%;
-
-	& .card {
+	&, & > * {
 		width: 100%;
 		height: 100%;
+	}
+
+	& .loading {
 	}
 }
 </style>
