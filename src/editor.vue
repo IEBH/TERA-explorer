@@ -13,6 +13,9 @@ export default {
 		isLoading: true,
 	}},
 	async created() {
+		// Wait for $tera to be ready
+		await this.$tera.init();
+
 		// Ensure there is an active project
 		await this.$tera.requireProject();
 
@@ -25,7 +28,7 @@ export default {
 </script>
 
 <template>
-	<div class="editor container">
+	<div class="editor">
 		<div v-if="isLoading" class="loading d-flex-center fs-1">
 			<i class="fas fa-spinner fa-spin me-3"/>
 			Loading...
