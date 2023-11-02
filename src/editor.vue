@@ -6,23 +6,18 @@ export default {
 		JsonEditor,
 	},
 	data() { return {
+		/**
+		* Whether the editor component is loading or refreshing
+		* @type {Boolean}
+		*/
 		isLoading: true,
-
-		$tera: {
-			list: [
-				{id: 'FAKEPROJ', name: 'A fake project'},
-				{id: 'FAKE2', name: 'Fake project #2'},
-				{id: 'FAKE3', name: 'Fake project #3'},
-			],
-			state: {
-				id: 'FAKEPROJ',
-				name: 'A fake project',
-			},
-		},
 	}},
 	async created() {
 		// Ensure there is an active project
 		await this.$tera.requireProject();
+
+		// Wait for state / project list to finalize
+		await this.$tera.statePromise();
 
 		this.isLoading = false;
 	},
@@ -38,11 +33,17 @@ export default {
 		<div v-else class="card h-100">
 			<div class="card-header d-flex-center justify-content-between">
 				<div class="dropdown">
-					<a class="clickable dropdown-toggle" type="button" id="dropdownProjectSelect" data-bs-toggle="dropdown" aria-expanded="false">
+					<a
+						id="dropdownProjectSelect"
+						class="clickable dropdown-toggle"
+						type="button"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
 						{{$tera.state.name}}
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdownProjectSelect">
-						<li v-for="project in $tera.list" :key="project.id">
+						<li v-for="project in $tera.projects" :key="project.id">
 							<a class="dropdown-item clickable">
 								{{project.name}}
 							</a>
