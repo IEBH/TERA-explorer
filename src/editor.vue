@@ -53,9 +53,9 @@ export default {
 						</li>
 					</ul>
 				</div>
-				<span class="badge bg-primary">
+				<a @click="$tera.selectProject({setActive: true})" class="badge bg-primary">
 					{{$tera.state.id}}
-				</span>
+				</a>
 			</div>
 			<div class="card-body p-0 h-100">
 				<json-editor
@@ -79,6 +79,13 @@ export default {
 	}
 
 	& .loading {
+	}
+
+	a.badge {
+		cursor: pointer;
+		&:hover {
+			color: var(--bs-white);
+		}
 	}
 }
 </style>
