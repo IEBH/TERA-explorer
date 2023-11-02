@@ -20,7 +20,7 @@ export default defineConfig(({mode}) => {
 			headers: {
 				'Content-Security-Policy': env.SITE_CSP,
 			},
-			port: 5000,
+			port: 5173,
 		},
 	};
 });
