@@ -12,11 +12,12 @@ import './bootstrap.vue';
 // $tera
 import TeraFy from '@iebh/tera-fy';
 import TerafyVue from '@iebh/tera-fy/plugins/vue';
-let terafy = await new TeraFy()
+let terafy = new TeraFy()
 	.set('devMode', import.meta.env.DEV)
 	.set('siteUrl', 'http://localhost:5173/embed') // Uncomment the next line if running TERA locally
 	.use(TerafyVue) // Add the Vue plugin
-	.init(); // Initialize everything
+
+terafy.init(); // Initialize everything
 
 app.use(terafy.vuePlugin({
 	globalName: '$tera', // Install as vm.$tera into every component
