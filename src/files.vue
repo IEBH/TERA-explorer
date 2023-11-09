@@ -18,6 +18,7 @@ export default {
 
 		/**
 		* The currently selected file (if any)
+		* @type {File}
 		*/
 		file: null,
 	}},
@@ -37,7 +38,6 @@ export default {
 		selectFile(file) {
 			this.file = file;
 		},
-
 
 
 		/**
@@ -133,6 +133,12 @@ export default {
 									<a @click="selectFile(file)" class="dropdown-item">
 										<i class="fas fa-fw fa-file"/>
 										View file data
+									</a>
+								</li>
+								<li>
+									<a @click="selectLibrary(file)" class="dropdown-item">
+										<i class="fas fa-fw fa-book"/>
+										View reference data
 									</a>
 								</li>
 								<li>
