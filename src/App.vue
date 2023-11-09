@@ -1,16 +1,16 @@
 <script>
-import Editor from './editor.vue';
+import Frame from './frame.vue';
 
 export default {
 	components: {
-		Editor,
+		Frame,
 	},
 }
 </script>
 
 <template>
 	<div>
-		<Editor/>
+		<Frame/>
 	</div>
 </template>
 

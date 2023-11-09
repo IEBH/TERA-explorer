@@ -14,7 +14,7 @@ import 'bootstrap/js/dist/dropdown';
 // import 'bootstrap/js/dist/offcanvas';
 // import 'bootstrap/js/dist/popover';
 // import 'bootstrap/js/dist/scrollspy';
-// import 'bootstrap/js/dist/tab';
+import 'bootstrap/js/dist/tab';
 // import 'bootstrap/js/dist/toast'; // Handled by vm.$toast
 // import 'bootstrap/js/dist/tooltip'; // Handled by v-tooltip
 </script>
@@ -40,13 +40,13 @@ import 'bootstrap/js/dist/dropdown';
 /* @import "bootstrap/scss/images"; */
 @import "bootstrap/scss/containers";
 /* @import "bootstrap/scss/grid"; */
-/* @import "bootstrap/scss/tables"; */
+@import "bootstrap/scss/tables";
 /* @import "bootstrap/scss/forms"; */
-/* @import "bootstrap/scss/buttons"; */
+@import "bootstrap/scss/buttons";
 /* @import "bootstrap/scss/transitions"; */
 @import "bootstrap/scss/dropdown";
 /* @import "bootstrap/scss/button-group"; */
-/* @import "bootstrap/scss/nav"; */
+@import "bootstrap/scss/nav";
 /* @import "bootstrap/scss/navbar"; */
 @import "bootstrap/scss/card";
 /* @import "bootstrap/scss/accordion"; */
@@ -71,6 +71,7 @@ import 'bootstrap/js/dist/dropdown';
 a {
 	text-decoration: none;
 	color: var(--bs-text);
+	cursor: pointer;
 
 	&:hover {
 		color: var(--bs-primary);
@@ -91,4 +92,50 @@ a {
 	align-items: center;
 }
 /* }}} */
+
+/* Utility - .btn.btn-ellipsis {{{ */
+/* Button indicating a dropdown menu */
+.btn.btn-ellipsis {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+
+	&::after {
+		font-weight: 900;
+		content: "\f142";
+		font-family: "Font Awesome 6 Free";
+	}
+
+
+	/* Background: normal {{{ */
+	&:hover {
+		background: #eee;
+	}
+
+	&:active, &.show {
+		background: var(--accent);
+		color: var(--text);
+	}
+	/* }}} */
+
+	/* .bg-primary background */
+	&.bg-primary {
+		color: var(--white);
+
+		&.show {
+			background: var(--accent-highlight) !important;
+			border: var(--accent-highlight) !important;
+		}
+
+		&:hover {
+			background: var(--accent-highlight) !important;
+		}
+	}
+
+}
+/* }}} */
+
 </style>

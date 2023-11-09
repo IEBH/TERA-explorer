@@ -9,12 +9,22 @@ let app = globalThis.app = createApp(App);
 import './bootstrap.vue';
 
 
+// Tooltips via v-tooltip
+import {plugin as VueTippy} from 'vue-tippy';
+import 'tippy.js/dist/tippy.css';
+app.use(VueTippy, {
+	theme: 'material',
+	directive: 'tooltip',
+	component: 'tooltip',
+});
+
+
 // $tera
 import TeraFy from '@iebh/tera-fy';
 import TerafyVue from '@iebh/tera-fy/plugins/vue';
 let terafy = new TeraFy()
 	.set('devMode', import.meta.env.DEV)
-	// .set('siteUrl', 'http://localhost:5173/embed') // Uncomment this line if running TERA locally
+	.set('siteUrl', 'http://localhost:8000/embed') // Uncomment this line if running TERA locally
 	.use(TerafyVue) // Add the Vue plugin
 
 terafy.init(); // Initialize everything
