@@ -43,22 +43,20 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "@iebh/tera-fy": "^1.0.9",
+    "@iebh/tera-fy": "^1.0.11",
     "@momsfriendlydevco/eslint-config": "^1.0.9",
     "@vitejs/plugin-vue": "^4.4.0",
-    "axios": "^1.5.1",
+    "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
-    "eslint": "^8.52.0",
-    "i": "^0.3.7",
-    "json-editor-vue": "^0.11.0",
-    "npm": "^10.2.2",
-    "sass": "^1.69.0",
+    "eslint": "^8.56.0",
+    "json-editor-vue": "^0.12.0",
+    "sass": "^1.71.0",
     "unplugin-cloudflare-headers": "^0.3.3",
     "vite": "^4.4.11",
     "vue": "^3.3.4",
     "vue-eslint-parser": "^9.3.2",
     "vue-router": "^4.2.5",
-    "vue-tippy": "^6.3.1"
+    "vue-tippy": "^6.4.1"
   },
   "eslintConfig": {
     "extends": "@momsfriendlydevco",
