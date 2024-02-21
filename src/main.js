@@ -19,14 +19,17 @@ app.use(VueTippy, {
 });
 
 
-// $tera
+// $tera service
 import TeraFy from '@iebh/tera-fy';
-import TerafyVue from '@iebh/tera-fy/plugins/vue';
-let terafy = new TeraFy()
-	.set('devMode', import.meta.env.DEV)
-	.set('siteUrl', 'http://localhost:8000/embed') // Uncomment this line if running TERA locally
-	.use(TerafyVue) // Add the Vue plugin
+import TerafyVue from '@iebh/tera-fy/plugins/vue3';
+let terafy = new TeraFy();
 
+// Add dev environment config
+if (import.meta.env.VITE_TERAFY_DEV) terafy.set('devMode', true);
+if (import.meta.env.VITE_TERAFY_URL) terafy.set('siteUrl', import.meta.env.VITE_TERAFY_URL);
+
+// Boot everything
+terafy.use(TerafyVue) // Add the Vue plugin
 terafy.init(); // Initialize everything
 
 app.use(terafy.vuePlugin({
