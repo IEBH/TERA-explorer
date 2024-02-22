@@ -27,7 +27,7 @@ let terafy = new TeraFy()
 	.setIfDev('siteUrl', import.meta.env.VITE_TERAFY_URL)
 	.use(TerafyVue) // Add the Vue plugin
 
-await terafy.init(); // Initialize everything
+terafy.init(); // Initialize everything
 
 app.use(terafy.vuePlugin({
 	globalName: '$tera', // Install as vm.$tera into every component
