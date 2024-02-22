@@ -22,15 +22,12 @@ app.use(VueTippy, {
 // $tera service
 import TeraFy from '@iebh/tera-fy';
 import TerafyVue from '@iebh/tera-fy/plugins/vue3';
-let terafy = new TeraFy();
+let terafy = new TeraFy()
+	.set('devMode', import.meta.env.VITE_TERAFY_DEV == 1)
+	.setIfDev('siteUrl', import.meta.env.VITE_TERAFY_URL)
+	.use(TerafyVue) // Add the Vue plugin
 
-// Add dev environment config
-if (import.meta.env.VITE_TERAFY_DEV) terafy.set('devMode', true);
-if (import.meta.env.VITE_TERAFY_URL) terafy.set('siteUrl', import.meta.env.VITE_TERAFY_URL);
-
-// Boot everything
-terafy.use(TerafyVue) // Add the Vue plugin
-terafy.init(); // Initialize everything
+await terafy.init(); // Initialize everything
 
 app.use(terafy.vuePlugin({
 	globalName: '$tera', // Install as vm.$tera into every component
