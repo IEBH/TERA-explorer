@@ -77,7 +77,7 @@ export default {
 						v-if="references"
 						v-model="references"
 						mode="text"
-						class="h-100"
+						class="file-refs h-100"
 						readOnly
 					/>
 				</div>
@@ -85,3 +85,9 @@ export default {
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+.file-refs {
+	max-height: calc(100vh - 164px);
+}
+</style>
