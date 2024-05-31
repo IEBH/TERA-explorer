@@ -41,6 +41,15 @@ export default {
 
 
 		/**
+		* Fetch citation library as JSON and copy to clipboard
+		*/
+		async copyLibrary(file) {
+			let refs = await file.getRefs();
+			await navigator.clipboard.writeText(JSON.stringify(refs, null, '\t'));
+		},
+
+
+		/**
 		* Format an input string into a human readable format using the Intl.NumberFormat utility
 		*
 		* @param {Number} size The size to format
@@ -128,33 +137,25 @@ export default {
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
 							/>
-							<ul class="dropdown-menu" aria-labelledby="`fileVerbs-${file.name}`">
-								<li>
-									<a @click="selectFile(file)" class="dropdown-item">
-										<i class="fas fa-fw fa-file"/>
-										View file data
-									</a>
-								</li>
-								<li>
-									<a @click="selectLibrary(file)" class="dropdown-item">
-										<i class="fas fa-fw fa-book"/>
-										View reference data
-									</a>
-								</li>
-								<li>
-									<a @click="download(file)" class="dropdown-item">
-										<i class="fas fa-fw fa-download"/>
-										Download
-									</a>
-								</li>
-								<li><hr class="dropdown-divider"/></li>
-								<li>
-									<a @click="remove(file)" class="dropdown-item dropdown-item-danger">
-										<i class="fas fa-fw fa-trash"/>
-										Delete
-									</a>
-								</li>
-							</ul>
+							<div class="dropdown-menu" aria-labelledby="`fileVerbs-${file.name}`">
+								<a @click="selectFile(file)" class="dropdown-item">
+									<i class="fas fa-fw fa-file"/>
+									View file data
+								</a>
+								<a v-if="file.meta.reflib" @click="copyLibrary(file)" class="dropdown-item">
+									<i class="fas fa-fw fa-copy"/>
+									Copy refs as JSON
+								</a>
+								<a @click="download(file)" class="dropdown-item">
+									<i class="fas fa-fw fa-download"/>
+									Download
+								</a>
+								<div class="dropdown-divider"/>
+								<a @click="remove(file)" class="dropdown-item dropdown-item-danger">
+									<i class="fas fa-fw fa-trash"/>
+									Delete
+								</a>
+							</div>
 						</div>
 						<!-- }}} -->
 					</td>
