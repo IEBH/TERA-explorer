@@ -34,9 +34,8 @@ export default {
 		/**
 		* Fetch the refs for the active file if we don't already have them
 		*/
-		fetchRefs() {
-			return this.$tera.getProjectLibrary(this.file.path)
-				.then(references => this.references = references)
+		async fetchRefs() {
+			this.references = await this.file.getRefs();
 		},
 	},
 }
