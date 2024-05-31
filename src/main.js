@@ -23,7 +23,8 @@ app.use(VueTippy, {
 import TeraFy from '@iebh/tera-fy';
 import TerafyVue from '@iebh/tera-fy/plugins/vue3';
 let terafy = new TeraFy()
-	.set('devMode', import.meta.env.VITE_TERAFY_DEV == 1)
+	.set('verbosity', import.meta.env.VITE_TERAFY_VERBOSITY || 1)
+	.setIfDev('devMode', import.meta.env.VITE_TERAFY_DEV == 1)
 	.setIfDev('siteUrl', import.meta.env.VITE_TERAFY_URL)
 	.use(TerafyVue) // Add the Vue plugin
 
