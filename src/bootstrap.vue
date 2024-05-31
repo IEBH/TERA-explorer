@@ -20,6 +20,11 @@ import 'bootstrap/js/dist/tab';
 </script>
 
 <style lang="scss">
+/* Globals */
+$accent: #4d659c; /* Primary accent color, available as --accent */
+$accent-highlight: #7d95cc; /* Primary accent color, available as --accent-highlight */
+$text: #eeeeee; /* Foreground text color, available as --text */
+
 /* Import + mutate Bootstrap as per https://getbootstrap.com/docs/5.0/customize/sass/#variable-defaults */
 /* The following sequence should mirror bootstrap/scss/bootstrap.scss */
 @import "bootstrap/scss/functions";
@@ -28,6 +33,13 @@ import 'bootstrap/js/dist/tab';
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/utilities";
+
+/* Application level CSS variables */
+:root {
+	--accent: #{$accent};
+	--accent-highlight: #{$accent-highlight};
+	--text: #{$text};
+}
 
 /* Bootstrap SCSS modules {{{ */
 /* The following sequence should mirror bootstrap/scss/bootstrap.scss for opt-in modules */
