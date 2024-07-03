@@ -58,7 +58,7 @@ export default {
 </script>
 
 <template>
-	<div class="h-100">
+	<div class="editor h-100">
 		<json-editor
 			v-model="localState"
 			mode="text"
@@ -73,27 +73,33 @@ export default {
 </template>
 
 <style lang="scss">
-.floating-toolbar {
-	position: fixed;
-	bottom: -100px;
-	right: 20px;
-	z-index: 100;
-	transition: bottom ease-out 0.25s;
-
-	&.active {
-		bottom: 20px;
+.editor {
+	& .jse-main {
+		height: calc(100% - 50px) !important;
 	}
 
-	& .btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		box-shadow: 5px 0 5px #0005;
+	.floating-toolbar {
+		position: fixed;
+		bottom: -100px;
+		right: 20px;
+		z-index: 100;
+		transition: bottom ease-out 0.25s;
 
-		font-size: 32px;
-		border-radius: 50%;
-		width: 70px;
-		height: 70px;
+		&.active {
+			bottom: 20px;
+		}
+
+		& .btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 5px 0 5px #0005;
+
+			font-size: 32px;
+			border-radius: 50%;
+			width: 70px;
+			height: 70px;
+		}
 	}
 }
 </style>
