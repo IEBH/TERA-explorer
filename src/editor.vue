@@ -116,6 +116,12 @@ export default {
 .editor {
 	& .jse-main {
 		height: calc(100% - 50px) !important;
+
+		/* Disable filter as it screws up the output binding */
+		/* This is a horrible way to hide the function but its the only methods supported as of https://github.com/josdejong/svelte-jsoneditor/issues/326 */
+		& .jse-menu > .jse-button:nth-of-type(7) {
+			display: none;
+		}
 	}
 
 	.floating-toolbar {
