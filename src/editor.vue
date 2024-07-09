@@ -1,5 +1,5 @@
 <script>
-import {cloneDeep} from 'lodash-es';
+import {cloneDeep, get as _get} from 'lodash-es';
 import JsonEditor from 'json-editor-vue';
 
 export default {
@@ -11,7 +11,7 @@ export default {
 		* A local copy of the $tera.state
 		* This is a deep clone to remove al lthe $tera reactivity
 		*/
-		localState: cloneDeep(this.$tera.state), // Deep copy state so we can save it manually when needed
+		localState: null,
 
 		/**
 		* Array notation sub-path we are focusing on within the main state, if any
@@ -39,16 +39,33 @@ export default {
 		isSaving: false,
 	}},
 	methods: {
+		/**
+		* Reload state, either from the TERA state OR the subpath
+		*/
+		refresh() {
+			console.log('Providing state from path', this.subPath || 'ROOT');
+
+			// Copy local state to local
+			this.localState = cloneDeep(
+				this.subPath
+					? _get(this.$tera.state, this.subPath)
+					: this.$tera.state
+			);
+
+			// Reset dirty state
+			this.dirtyState = null;
+		},
+
+
 		save() {
 			if (!this.dirtyState) return; // Nothing to do
 
 			Promise.resolve()
 				.then(()=> this.isSaving = true)
-				.then(()=> this.$tera.replaceProjectState(this.dirtyState))
-				.then(()=> {
-					console.log('Would save', this.dirtyState);
-					debugger;
-				})
+				.then(()=> this.subPath
+					? this.$tera.setProjectState(this.subPath, this.dirtyState)
+					: this.$tera.replaceProjectState(this.dirtyState)
+				)
 				.then(()=> this.dirtyState = null)
 				.finally(()=> this.isSaving = false)
 		},
@@ -62,7 +79,6 @@ export default {
 		*/
 		setDirtyState(newState) {
 			this.dirtyStateCount++;
-			debugger;
 			this.dirtyState = newState.text && typeof newState.text == 'string' ? JSON.parse(newState.text) // json-editor sometimes sets the state as a string
 				: newState.object ? newState.object // json-editor gave us an object partition
 				: newState; // Use raw input
@@ -79,18 +95,16 @@ export default {
 					&& i.type != 'space' // Remove final spacer
 				)
 				.concat([
-					/* FIXME: Feature not ready yet
 					{type: 'separator'},
 					{
 						type: 'button',
-						onClick: ()=> this.promoptSubpath(),
+						onClick: ()=> this.promptSubpath(),
 						icon: items.find(i => i.className == 'jse-transform').icon, // Copy from the icon we removed above
 						text: '',
 						title: 'Focus on a given path',
 						className: 'jse-focus',
 						disabled: false,
 					},
-					*/
 					{type: 'space'},
 				])
 		},
@@ -107,6 +121,7 @@ export default {
 				body: 'Enter the sub-path to focus as a dotted.notation.path',
 			})
 				.then(v => this.subPath = v)
+				.then(()=> this.refresh())
 		},
 
 
@@ -119,6 +134,13 @@ export default {
 				e.preventDefault();
 				return this.save();
 			}
+		},
+	},
+	watch: {
+		'$tera.state': {
+			immediate: true,
+			deep: true,
+			handler: 'refresh',
 		},
 	},
 	mounted() {
@@ -134,7 +156,6 @@ export default {
 <template>
 	<div class="editor h-100">
 		<json-editor
-			ref="jEditor"
 			v-model="localState"
 			mode="text"
 			class="h-100"
