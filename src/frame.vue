@@ -44,7 +44,9 @@ export default {
 						type="button"
 						v-tooltip="{
 							allowHTML: true,
-							content: `<div><strong>Project ID:</strong> ${$tera.state.id}</div><div class='text-center fst-italic mt-2'>Click to change project</div>`,
+							content:
+								`<div><strong>Project ID:</strong> ${$tera.state.id}</div>`
+								+ `<div class='text-center fst-italic mt-2'>Click to change project</div>`,
 						}"
 						@click="$tera.selectProject({setActive: true})"
 					>
