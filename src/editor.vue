@@ -38,7 +38,7 @@ export default {
 
 			Promise.resolve()
 				.then(()=> this.isSaving = true)
-				// .then(()=> this.$tera.replaceProjectState(this.dirtyState))
+				.then(()=> this.$tera.replaceProjectState(this.dirtyState))
 				.then(()=> {
 					console.log('Would save', this.dirtyState);
 					debugger;
