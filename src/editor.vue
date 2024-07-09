@@ -7,21 +7,59 @@ export default {
 		JsonEditor,
 	},
 	data() { return {
-		isDirty: false,
-		isSaving: false,
+		/**
+		* A local copy of the $tera.state
+		* This is a deep clone to remove al lthe $tera reactivity
+		*/
 		localState: cloneDeep(this.$tera.state), // Deep copy state so we can save it manually when needed
+
+		/**
+		* The object to save back to the $tera.state object
+		* Also signifies that the state is dirty if not falsy
+		* @type {Object}
+		*/
+		dirtyState: null,
+
+		/**
+		* How many changes have occured since the last save operationo
+		* @type {Number}
+		*/
+		dirtyStateCount: 0,
+
+		/**
+		* Signifies that a save operation is currently running
+		* @type {Boolean}
+		*/
+		isSaving: false,
 	}},
 	methods: {
 		save() {
+			if (!this.dirtyState) return; // Nothing to do
+
 			Promise.resolve()
 				.then(()=> this.isSaving = true)
-				.then(()=> typeof this.localState == 'string' // json-editor sometimes sets the state as a string
-					? JSON.parse(this.localState)
-					: this.localState
-				)
-				.then(newState => this.$tera.replaceProjectState(newState))
-				.then(()=> this.isDirty = false)
+				// .then(()=> this.$tera.replaceProjectState(this.dirtyState))
+				.then(()=> {
+					console.log('Would save', this.dirtyState);
+					debugger;
+				})
+				.then(()=> this.dirtyState = null)
 				.finally(()=> this.isSaving = false)
+		},
+
+
+		/**
+		* Svelte handling function to act as a callback when state is changed
+		* The input can be either unpased JSON or a JSON object
+		*
+		* @param {Object|String} newState The new state to set
+		*/
+		setDirtyState(newState) {
+			this.dirtyStateCount++;
+			debugger;
+			this.dirtyState = newState.text && typeof newState.text == 'string' ? JSON.parse(newState.text) // json-editor sometimes sets the state as a string
+				: newState.object ? newState.object // json-editor gave us an object partition
+				: newState; // Use raw input
 		},
 
 		/**
@@ -29,7 +67,7 @@ export default {
 		* Used to bind Ctrl+S to this.save()
 		*/
 		keyHandler(e) {
-			if (e.ctrlKey && e.code == 'KeyS' && this.isDirty) {
+			if (e.ctrlKey && e.code == 'KeyS' && this.dirtyState) {
 				e.preventDefault();
 				return this.save();
 			}
@@ -42,30 +80,32 @@ export default {
 	beforeUnmount() {
 		document.removeEventListener('keydown', this.keyHandler);
 	},
-	watch: {
-		localState() {
-			this.isDirty = true;
-		},
-		'$tera.state': {
-			deep: true,
-			handler() {
-				// React to remote changes
-				this.localState = cloneDeep(this.$tera.state);
-			},
-		},
-	},
 }
 </script>
 
 <template>
 	<div class="editor h-100">
 		<json-editor
+			ref="jEditor"
 			v-model="localState"
 			mode="text"
 			class="h-100"
+			:onChange="setDirtyState"
 		/>
-		<div class="floating-toolbar" :class="isDirty && 'active'">
-			<a @click="save" class="btn btn-lg btn-success" v-tooltip="'Save changes (Ctrl+S)'">
+		<div class="floating-toolbar" :class="dirtyState && 'active'">
+			<a
+				class="btn btn-lg btn-success"
+				v-tooltip="{
+					allowHTML: true,
+					content:
+						`<div>${dirtyStateCount > 1 ? 'Save ' + dirtyStateCount + ' changes' : 'Save change'}</div>`
+						+ `<div class='text-center fst-italic mt-2'>(Ctrl + S)</div>`,
+				}"
+				@click="save"
+			>
+				<span v-if="dirtyStateCount > 1" class="badge bg-info fs-6 p-1">
+					{{dirtyStateCount}}
+				</span>
 				<i :class="isSaving ? 'fas fa-spinner fa-spin' : 'fas fa-check'"/>
 			</a>
 		</div>
@@ -99,6 +139,12 @@ export default {
 			border-radius: 50%;
 			width: 70px;
 			height: 70px;
+		}
+
+		& .badge {
+			position: absolute;
+			right: 0px;
+			top: -10px;
 		}
 	}
 }
