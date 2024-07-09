@@ -40,21 +40,16 @@ export default {
 				<div class="dropdown">
 					<a
 						id="dropdownProjectSelect"
-						class="clickable dropdown-toggle px-2"
+						class="btn btn-light ms-1 px-2"
 						type="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false"
-						v-tooltip="{allowHTML: true, content: `<strong>Project ID:</strong> ${$tera.state.id}`}"
+						v-tooltip="{
+							allowHTML: true,
+							content: `<div><strong>Project ID:</strong> ${$tera.state.id}</div><div class='text-center fst-italic mt-2'>Click to change project</div>`,
+						}"
+						@click="$tera.selectProject({setActive: true})"
 					>
 						{{$tera.state.name}}
 					</a>
-					<ul class="dropdown-menu" aria-labelledby="dropdownProjectSelect">
-						<li v-for="project in $tera.projects" :key="project.id">
-							<a class="dropdown-item clickable">
-								{{project.name}}
-							</a>
-						</li>
-					</ul>
 				</div>
 				<ul class="nav nav-tabs pt-2 pe-2">
 					<li class="nav-item">
