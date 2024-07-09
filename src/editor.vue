@@ -14,6 +14,12 @@ export default {
 		localState: cloneDeep(this.$tera.state), // Deep copy state so we can save it manually when needed
 
 		/**
+		* Array notation sub-path we are focusing on within the main state, if any
+		* @type {Array<String>}
+		*/
+		subPath: null,
+
+		/**
 		* The object to save back to the $tera.state object
 		* Also signifies that the state is dirty if not falsy
 		* @type {Object}
@@ -62,6 +68,48 @@ export default {
 				: newState; // Use raw input
 		},
 
+
+		/**
+		* Svelte handling function to dictate the layout of the menu
+		*/
+		renderMenu(items) {
+			return items
+				.filter(i =>
+					i.className != 'jse-transform' // Remove filter menu
+					&& i.type != 'space' // Remove final spacer
+				)
+				.concat([
+					/* FIXME: Feature not ready yet
+					{type: 'separator'},
+					{
+						type: 'button',
+						onClick: ()=> this.promoptSubpath(),
+						icon: items.find(i => i.className == 'jse-transform').icon, // Copy from the icon we removed above
+						text: '',
+						title: 'Focus on a given path',
+						className: 'jse-focus',
+						disabled: false,
+					},
+					*/
+					{type: 'space'},
+				])
+		},
+
+
+		/**
+		* Prompt for a sub-path and update the display content there
+		*
+		* @returns {Promise} A promise which resolves when the operation has completed
+		*/
+		promptSubpath() {
+			return this.$tera.uiPrompt({
+				title: 'Enter subpath',
+				body: 'Enter the sub-path to focus as a dotted.notation.path',
+			})
+				.then(v => this.subPath = v)
+		},
+
+
 		/**
 		* DOM level key handler
 		* Used to bind Ctrl+S to this.save()
@@ -91,6 +139,7 @@ export default {
 			mode="text"
 			class="h-100"
 			:onChange="setDirtyState"
+			:onRenderMenu="renderMenu"
 		/>
 		<div class="floating-toolbar" :class="dirtyState && 'active'">
 			<a
@@ -116,12 +165,6 @@ export default {
 .editor {
 	& .jse-main {
 		height: calc(100% - 50px) !important;
-
-		/* Disable filter as it screws up the output binding */
-		/* This is a horrible way to hide the function but its the only methods supported as of https://github.com/josdejong/svelte-jsoneditor/issues/326 */
-		& .jse-menu > .jse-button:nth-of-type(7) {
-			display: none;
-		}
 	}
 
 	.floating-toolbar {
