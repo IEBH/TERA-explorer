@@ -43,7 +43,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "@iebh/tera-fy": "^1.13.0",
+    "@iebh/tera-fy": "^1.15.6",
     "@momsfriendlydevco/eslint-config": "^2.0.1",
     "@vitejs/plugin-vue": "^4.4.0",
     "axios": "^1.7.2",
