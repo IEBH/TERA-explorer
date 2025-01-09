@@ -1,11 +1,13 @@
 <script>
 import Editor from './editor.vue';
 import Files from './files.vue';
+import Session from './session.vue';
 
 export default {
 	components: {
 		Editor,
 		Files,
+		Session,
 	},
 	data() { return {
 		/**
@@ -60,6 +62,9 @@ export default {
 					<li class="nav-item">
 						<a class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-files">Files</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-session">Session</a>
+					</li>
 				</ul>
 			</div>
 			<div class="card-body p-0 h-100">
@@ -69,6 +74,9 @@ export default {
 					</div>
 					<div id="nav-files" class="tab-pane fade h-100" role="tabpanel">
 						<files/>
+					</div>
+					<div id="nav-session" class="tab-pane fade h-100" role="tabpanel">
+						<session/>
 					</div>
 				</div>
 			</div>
