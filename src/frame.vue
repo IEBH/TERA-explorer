@@ -23,9 +23,6 @@ export default {
 		// Ensure there is an active project
 		await this.$tera.requireProject();
 
-		// Wait for state / project list to finalize
-		await this.$tera.statePromise();
-
 		this.isLoading = false;
 	},
 }
@@ -47,12 +44,12 @@ export default {
 						v-tooltip="{
 							allowHTML: true,
 							content:
-								`<div><strong>Project ID:</strong> ${$tera.state.id}</div>`
+								`<div><strong>Project ID:</strong> ${$tera.project.id}</div>`
 								+ `<div class='text-center fst-italic mt-2'>Click to change project</div>`,
 						}"
 						@click="$tera.selectProject({setActive: true})"
 					>
-						{{$tera.state.name}}
+						{{$tera.project.name}}
 					</a>
 				</div>
 				<ul class="nav nav-tabs pt-2 pe-2">

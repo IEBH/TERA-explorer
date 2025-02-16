@@ -8,7 +8,7 @@ export default {
 	},
 	data() { return {
 		/**
-		* A local copy of the $tera.state
+		* A local copy of the $tera.project
 		* This is a deep clone to remove al lthe $tera reactivity
 		*/
 		localState: null,
@@ -20,7 +20,7 @@ export default {
 		subPath: null,
 
 		/**
-		* The object to save back to the $tera.state object
+		* The object to save back to the $tera.project object
 		* Also signifies that the state is dirty if not falsy
 		* @type {Object}
 		*/
@@ -48,8 +48,8 @@ export default {
 			// Copy local state to local
 			this.localState = cloneDeep(
 				this.subPath
-					? _get(this.$tera.state, this.subPath)
-					: this.$tera.state
+					? _get(this.$tera.project, this.subPath)
+					: this.$tera.project
 			);
 
 			// Reset dirty state
@@ -87,6 +87,9 @@ export default {
 
 		/**
 		* Svelte handling function to dictate the layout of the menu
+		*
+		* @param {Array<Object>} item Existing menu options to agument
+		* @returns {Array<Object>} Augmented menu options
 		*/
 		renderMenu(items) {
 			return items
@@ -128,6 +131,8 @@ export default {
 		/**
 		* DOM level key handler
 		* Used to bind Ctrl+S to this.save()
+		*
+		* @param {Event} e The keypress event
 		*/
 		keyHandler(e) {
 			if (e.ctrlKey && e.code == 'KeyS' && this.dirtyState) {
@@ -136,19 +141,19 @@ export default {
 			}
 		},
 	},
-	watch: {
-		'$tera.state': {
-			immediate: true,
-			deep: true,
-			handler: 'refresh',
-		},
-	},
 	mounted() {
 		// Listen for Ctrl+S and bind it to this.save()
 		document.addEventListener('keydown', this.keyHandler);
 	},
 	beforeUnmount() {
 		document.removeEventListener('keydown', this.keyHandler);
+	},
+	watch: {
+		'$tera.project': {
+			immediate: true,
+			deep: true,
+			handler: 'refresh',
+		},
 	},
 }
 </script>

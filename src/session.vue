@@ -15,6 +15,8 @@ export default {
 	methods: {
 		/**
 		* Refresh the current user state
+		*
+		* @returns {Promise} A promise which resolves when the operation has completed
 		*/
 		refresh() {
 			return this.$tera.getUser()
