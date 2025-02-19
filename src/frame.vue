@@ -1,12 +1,14 @@
 <script>
 import Editor from './editor.vue';
 import Files from './files.vue';
+import Namespaces from './namespaces.vue';
 import Session from './session.vue';
 
 export default {
 	components: {
 		Editor,
 		Files,
+		Namespaces,
 		Session,
 	},
 	data() { return {
@@ -57,6 +59,9 @@ export default {
 						<a class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-state">State</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-namespaces">Namespaces</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-files">Files</a>
 					</li>
 					<li class="nav-item">
@@ -68,6 +73,9 @@ export default {
 				<div class="tab-content h-100">
 					<div id="nav-state" class="tab-pane fade show active h-100" role="tabpanel">
 						<editor/>
+					</div>
+					<div id="nav-namespaces" class="tab-pane fade h-100" role="tabpanel">
+						<namespaces/>
 					</div>
 					<div id="nav-files" class="tab-pane fade h-100" role="tabpanel">
 						<files/>
